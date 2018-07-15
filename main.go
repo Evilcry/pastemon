@@ -33,6 +33,7 @@ func main() {
 	for {
 		scrape.PastebinScraper(&conf)
 		time.Sleep(time.Duration(conf.Sleep) * time.Second)
+		db.CleanKeys(&conf)
 	}
 
 }
