@@ -22,6 +22,8 @@ type Regex struct {
 	Match    string
 }
 
+// Config struct
+// all config details here
 type Config struct {
 	Keys     map[string]time.Time
 	Ds       *store.Store
@@ -29,8 +31,10 @@ type Config struct {
 	Regexes  []*Regex   // A list of regular expressions to test against data.
 	Buckets  []string   `json:"buckets"`       // List of buckets we need to create.
 	DbFile   string     `json:"database_file"` // File to use for the Store database.
+	PasteDir string     `json:"paste_dir"`     // File to use for the Store database.
 	MaxSize  int        `json:"max_size"`      // Do not save files larger than this many bytes.
 	MaxTime  int        `json:"max_time"`      // Max time, in seconds, to store previously downloaded keys.
+	SaveFile bool       `json:"save_file"`     // Save all matching pastes
 	Sleep    int        // Time, in seconds, to wait between each run.
 	Save     bool
 }

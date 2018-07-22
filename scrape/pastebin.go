@@ -25,19 +25,21 @@ type Paste struct {
 	Content   string
 }
 
+// Download func
+// retrieve paste
 func (p *Paste) Download(conf *configs.Config) {
 	_, exists := conf.Keys[p.Key]
 	if exists {
 		return
 	}
 
-	log.Printf("[+] Downloading paste: %s\n", p.Key)
-
 	resp := netutils.Get(p.ScrapeUrl)
 	p.Content = string(resp)
 	conf.Keys[p.Key] = time.Now()
 }
 
+// Process func
+// processes paste content
 func (p *Paste) Process(conf *configs.Config) {
 	processing.ProcessContent(conf, p.Key, p.Content)
 }

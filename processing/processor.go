@@ -2,6 +2,9 @@ package processing
 
 import (
 	"fmt"
+	"io/ioutil"
+	"log"
+	"path"
 	"strings"
 
 	"github.com/evilcry/pastemon/db"
@@ -10,11 +13,20 @@ import (
 )
 
 func savePaste(conf *configs.Config, key, content string) {
-	if conf.Save == false {
+	if len(content) > conf.MaxSize {
 		return
 	}
 
-	if len(content) > conf.MaxSize {
+	log.Println("[+] Saving paste: ", key)
+
+	if conf.SaveFile {
+		err := ioutil.WriteFile(path.Join(conf.PasteDir, key), []byte(content), 0644)
+		if err != nil {
+			log.Println("[!] Error while storing paste: ", err)
+		}
+	}
+
+	if conf.Save == false {
 		return
 	}
 
